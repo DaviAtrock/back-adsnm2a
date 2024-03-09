@@ -18,7 +18,7 @@ app.get("/", function(req, res) {
     console.log("Cabecalho=", req.headers);
     console.log("Parametros=", req.params);
     console.log("Corpo=", req.body);
-    res.send("Olá");
+    res.status("201").send("Olá");
 });
 
 app.post("/", function(req, res){
@@ -41,4 +41,6 @@ app.use(function(error, req, res, next){
 
 app.listen(3000, function(){
     console.log('API está ON');
-})
+});
+
+module.exports = app;
