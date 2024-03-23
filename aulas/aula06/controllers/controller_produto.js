@@ -16,13 +16,22 @@ function buscarPeloId(req, res, next) {
         req.produtoEncontrado = produtoEncontrado;
         next();
     } else {
-        req.status(404).json({msg: 'Produto não encontrado'});
+        res.status(404).json({msg: 'Produto não encontrado'});
+    }
+};
+
+function validarDados(req, res, next) {
+    const { nome, preco } = req.body;
+    if (nome && preco) {
+        next();
+    } else {
+        res.status(422).json({ msg: "Nome e preço são obrigatórios!" });
     }
 };
 
 function criar(req, res) {
     const { nome, preco } = req.body;
-    const produtoNovo = { id: produtos.lenght+1, nome, preco};
+    const produtoNovo = { id: produtos.length+1, nome, preco};
     produtos.push(produtoNovo);
     res.status(201).json(produtoNovo);
 };
@@ -44,6 +53,6 @@ function remover(req, res) {
     } else {
         req.status(404).json({msg: 'Produto não encontrado'});
     }
-}
+};
 
-module.exports = { listarTodos, buscarPeloId, criar, atualizar, remover, exibir };
+module.exports = { listarTodos, buscarPeloId, criar, atualizar, remover, exibir, validarDados };
